@@ -1,4 +1,9 @@
+import { useState } from "react";
 import Accordion from "./components/Accordion";
+import { Bill } from "./components/Bill";
+import ResetButton from "./components/ResetButton";
+import Service from "./components/Service";
+import Servicerating from "./components/Servicerating";
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -18,10 +23,24 @@ const faqs = [
 ];
 
 export default function App() {
+  const [input, setInput] = useState(null)
+  const [select, setSelect] = useState()
+
+  function tipCalculator(){
+    
+  }
 
   return (
     <div>
       <Accordion data={faqs}/>
+      <div className="checkout">
+        <Bill value={input} onChange={setInput}/>
+        <Service value={select} onChange={setSelect}/>
+        <Servicerating value={input} onChange={setInput}/>
+        <ResetButton
+          handleReset={handleReset}
+        >Reset</ResetButton>
+      </div>
     </div>
   );
 }
