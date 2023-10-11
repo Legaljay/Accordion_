@@ -4,6 +4,7 @@ import { Bill } from "./components/Bill";
 import ResetButton from "./components/ResetButton";
 import Service from "./components/Service";
 import Servicerating from "./components/Servicerating";
+import TipCalculator from "./components/Calculator";
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -23,23 +24,32 @@ const faqs = [
 ];
 
 export default function App() {
-  const [input, setInput] = useState(null)
-  const [select, setSelect] = useState()
+  const [bill, setBill] = useState(0)
+  const [selectPercent, setSelectPercent] = useState(0)
+  const [selectPercent2, setSelectPercent2] = useState(0)
 
-  function tipCalculator(){
-    
+  function handleReset(){
+    setBill(0)
+    setSelectPercent(0)
+    setSelectPercent2(0)
   }
 
   return (
     <div>
       <Accordion data={faqs}/>
       <div className="checkout">
-        <Bill value={input} onChange={setInput}/>
-        <Service value={select} onChange={setSelect}/>
-        <Servicerating value={input} onChange={setInput}/>
-        <ResetButton
-          handleReset={handleReset}
-        >Reset</ResetButton>
+        <Bill bill={bill} onSetBill={setBill}/>
+        <Service selectPercent={selectPercent} onSelect={setSelectPercent}>How did you like the service?</Service>
+        <Servicerating selectPercent2={selectPercent2} onSelect={setSelectPercent2}>How did your friend like the service?</Servicerating>
+        {
+          bill > 0 && 
+          <>
+            <TipCalculator bill={bill} selectPercent={selectPercent} selectPercent2={selectPercent2}/>
+            <ResetButton
+                handleReset={handleReset}
+            >Reset</ResetButton>
+          </>
+        }
       </div>
     </div>
   );
